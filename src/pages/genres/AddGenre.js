@@ -47,10 +47,9 @@ export default function AddGenre() {
       if (data.success) {
         toast.success("Genre Added Succesfully.", {
             position: toast.POSITION.BOTTOM_CENTER,
-          });
-        resetForm();
-        
+          });     
       }
+      resetForm();
     } catch (err) {
       console.log(err)
       toast.error(getError(err), {

@@ -59,7 +59,7 @@ export default function EditGenresModel(props) {
       );
       // console.log(data);
       if (data.success) {
-        toast.success("Genre Updated Succesfully.  Redirecting...", {
+        toast.success("Genre Updated Succesfully.", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         resetForm();

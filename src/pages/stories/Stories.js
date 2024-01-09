@@ -54,7 +54,7 @@ export default function Stories() {
           headers: { authorization: `Bearer ${token}` },
         });
         setDel(false);
-        toast.success("User Deleted Successsfully");
+        toast.success("Story Deleted Successsfully");
       } catch (error) {
         toast.error(getError(error), {
           position: toast.POSITION.BOTTOM_CENTER,
