@@ -67,7 +67,7 @@ const ViewProfile = () => {
           <>
             <Card>
               <Card.Header>
-                <Card.Title>{loading?<Skeleton />:`${userInfo.firstName} ${userInfo.lastName}`}</Card.Title>
+                <Card.Title>{loading?<Skeleton />:`Admin Profile`}</Card.Title>
                 <div className="card-tools">
                   <FaEdit
                     style={{ color: "blue" }}

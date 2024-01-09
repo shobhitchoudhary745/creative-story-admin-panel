@@ -43,6 +43,7 @@ export default function Genres() {
   }, [curPage, resultPerPage, token, del]);
 
   const deleteGenre = async (id) => {
+    console.log(genreLength,"testing",curPage)
     if (
       window.confirm("Are you sure you want to delete this genre?") === true
     ) {
@@ -51,6 +52,11 @@ export default function Genres() {
         const res = await axiosInstance.delete(`/api/admin/deleteGenre/${id}`, {
           headers: { authorization: `Bearer ${token}` },
         });
+        console.log(genreLength,"testing",curPage)
+        if((genreLength-1)%resultPerPage===0&&curPage!=1){
+          console.log("first")
+          setCurPage(p=>p-1);
+        }
         setDel(false);
         toast.success("Genre Deleted Successsfully");
       } catch (error) {
@@ -74,9 +80,15 @@ export default function Genres() {
         ) : (
           <Card>
             <Card.Header>
-              <div style={{ fontWeight: "500" }} className="btn mt-1">
-                Genres
-              </div>
+            <Button
+                onClick={() => {
+                  navigate(`/admin/genre/add`);
+                }}
+                type="success"
+                className="btn btn-primary btn-block mt-1"
+              >
+                Add Genre
+              </Button>
               <div className="search-box float-end">
                 <InputGroup>
                   <Form.Control

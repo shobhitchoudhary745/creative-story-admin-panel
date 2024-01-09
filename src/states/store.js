@@ -64,7 +64,7 @@ function reducer(state, action) {
         return {
           ...state,
           genres: action.payload.genres,
-          genreLengthLength: action.payload.length,
+          genreLength: action.payload.length,
         };
       case "GENRE_DATA_FETCH_SUCCESSFULLY":
         return {

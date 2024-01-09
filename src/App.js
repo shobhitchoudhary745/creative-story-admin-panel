@@ -14,6 +14,7 @@ import ViewStories from "./pages/stories/ViewStories";
 import PrivacyPolicy from "./pages/privacypolicy/PrivacyPolicy";
 import TermsAndCondition from "./pages/termsandcondition/TermsAndCondition";
 import ViewGenre from "./pages/genres/ViewGenre";
+import AddGenre from "./pages/genres/AddGenre";
 
 function App() {
   const { state } = useContext(Store);
@@ -62,6 +63,14 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <Genres />
+              </AdminProtectedRoute>
+            }
+          />
+           <Route
+            exact path="/admin/genre/add"
+            element={
+              <AdminProtectedRoute>
+                <AddGenre />
               </AdminProtectedRoute>
             }
           />
