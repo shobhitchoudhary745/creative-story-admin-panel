@@ -26,12 +26,12 @@ export default function EditStoriesModel(props) {
   const [theme, setTheme] = useState("");
   const [description, setDescription] = useState("");
 
-  useEffect(()=>{
-    setRoomName(story?.roomName?story.roomName:"");
-    setStatus(story?.status?story.status:"");
-    setTheme(story?.theme?story.theme:"");
-    setDescription(story?.description?story.description:"");
-  },[story])
+  useEffect(() => {
+    setRoomName(story?.roomName ? story.roomName : "");
+    setStatus(story?.status ? story.status : "");
+    setTheme(story?.theme ? story.theme : "");
+    setDescription(story?.description ? story.description : "");
+  }, [story]);
 
   const resetForm = () => {
     setRoomName("");
@@ -95,7 +95,9 @@ export default function EditStoriesModel(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">Edit Story Room</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Edit Story Room
+        </Modal.Title>
       </Modal.Header>
       <Form onSubmit={submitHandler}>
         <Modal.Body>
@@ -107,13 +109,19 @@ export default function EditStoriesModel(props) {
                 onChange={(e) => setRoomName(e.target.value)}
               />
             </Form.Group>
-
-            <Form.Group className="mb-3" controlId="description">
+            <Form.Group className="mb-3">
               <Form.Label>Status</Form.Label>
-              <Form.Control
+              <Form.Select
                 value={status}
-                onChange={(e) => setStatus(e.target.value)}
-              />
+                onChange={(e) => {
+                  setStatus(e.target.value);
+                }}
+                aria-label="Default select example"
+              >
+                <option value={"active"}>Active</option>
+                <option value={"upcoming"}>Upcoming</option>
+                <option value={"completed"}>Completed</option>
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Theme</Form.Label>

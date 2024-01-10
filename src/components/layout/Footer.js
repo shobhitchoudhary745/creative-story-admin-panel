@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { Store } from "../../states/store";
+import { Link } from "react-router-dom";
 
 export default function Footer() {
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -13,7 +14,7 @@ export default function Footer() {
           <footer className="text-center">
             <strong>
               Copyright © 2014-{`${d.getFullYear()} `}
-              <a href="http://localhost:3000">Creative Story</a>.{" "}
+              <Link to="/admin/dashboard">Creative Story</Link>.{" "}
             </strong>
             All rights reserved.
           </footer>
