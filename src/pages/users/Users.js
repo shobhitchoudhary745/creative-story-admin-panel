@@ -49,7 +49,9 @@ export default function Users() {
           headers: { authorization: `Bearer ${token}` },
         });
         setDel(false);
-        toast.success("User Deleted Successsfully");
+        toast.success("User Deleted Successsfully", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
       } catch (error) {
         toast.error(getError(error), {
           position: toast.POSITION.BOTTOM_CENTER,

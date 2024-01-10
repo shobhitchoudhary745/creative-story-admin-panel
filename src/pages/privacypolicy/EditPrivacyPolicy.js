@@ -13,7 +13,7 @@ import { LoadingBox } from "../../components";
 export default function EditPrivacyPolicyModel(props) {
   const navigate = useNavigate();
   const { state } = useContext(Store);
-  const { token } = state;
+  const { token, privacyPolicy } = state;
   const { id } = useParams(); // category/:id
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -21,10 +21,13 @@ export default function EditPrivacyPolicyModel(props) {
     error: "",
   });
 
-  const [content,setContent] = useState("");
+  const [content, setContent] = useState("");
+  useEffect(() => {
+    setContent(privacyPolicy);
+  }, [privacyPolicy]);
 
   const resetForm = () => {
-    setContent("")
+    setContent("");
   };
 
   useEffect(() => {}, [id, props.show]);
@@ -40,7 +43,7 @@ export default function EditPrivacyPolicyModel(props) {
       const { data } = await axiosInstance.put(
         `/api/admin/updatePrivacyPolicy`,
         {
-          content
+          content,
         },
         {
           headers: {
@@ -79,7 +82,9 @@ export default function EditPrivacyPolicyModel(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">Edit Privacy Policy</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Edit Privacy Policy
+        </Modal.Title>
       </Modal.Header>
       <Form onSubmit={submitHandler}>
         <Modal.Body>
@@ -90,7 +95,7 @@ export default function EditPrivacyPolicyModel(props) {
                 as="textarea"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                style={{ height: '200px' }}
+                style={{ height: "200px" }}
               />
             </Form.Group>
             <ToastContainer />

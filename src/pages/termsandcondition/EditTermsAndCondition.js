@@ -13,7 +13,7 @@ import { LoadingBox } from "../../components";
 export default function EditTermsAndConditionModel(props) {
   const navigate = useNavigate();
   const { state } = useContext(Store);
-  const { token } = state;
+  const { token, termsAndCondition } = state;
   const { id } = useParams(); // category/:id
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -21,10 +21,13 @@ export default function EditTermsAndConditionModel(props) {
     error: "",
   });
 
-  const [content,setContent] = useState("");
+  const [content, setContent] = useState("");
+  useEffect(() => {
+    setContent(termsAndCondition);
+  }, [termsAndCondition]);
 
   const resetForm = () => {
-    setContent("")
+    setContent("");
   };
 
   useEffect(() => {}, [id, props.show]);
@@ -40,7 +43,7 @@ export default function EditTermsAndConditionModel(props) {
       const { data } = await axiosInstance.put(
         `/api/admin/updateTermsAndCondition`,
         {
-          content
+          content,
         },
         {
           headers: {
@@ -79,7 +82,9 @@ export default function EditTermsAndConditionModel(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">Edit Terms & Condition</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Edit Terms & Condition
+        </Modal.Title>
       </Modal.Header>
       <Form onSubmit={submitHandler}>
         <Modal.Body>
@@ -90,12 +95,10 @@ export default function EditTermsAndConditionModel(props) {
                 as="textarea"
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                style={{ height: '200px' }}
+                style={{ height: "200px" }}
               />
             </Form.Group>
 
-            
-            
             <ToastContainer />
           </Container>
         </Modal.Body>

@@ -13,7 +13,7 @@ import { LoadingBox } from "../../components";
 export default function EditGenresModel(props) {
   const navigate = useNavigate();
   const { state } = useContext(Store);
-  const { token } = state;
+  const { token, genre } = state;
   const { id } = useParams(); // category/:id
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -21,10 +21,21 @@ export default function EditGenresModel(props) {
     error: "",
   });
 
-  const [genre, setGenre] = useState("");
+  const [genres, setGenre] = useState("");
   const [starter1, setStarter1] = useState("");
   const [starter2, setStarter2] = useState("");
   const [starter3, setStarter3] = useState("");
+
+  useEffect(()=>{
+    if(genre.starter&&genre.starter){
+      setGenre(genre?.genre?genre.genre:"");
+      setStarter1(genre?.starter[0]?genre.starter[0]:"");
+      setStarter2(genre?.starter[1]?genre.starter[1]:"");
+      setStarter3(genre?.starter[2]?genre.starter[2]:"");
+    }
+   
+
+  },[genre])
 
   const resetForm = () => {
     setGenre("");
@@ -46,7 +57,7 @@ export default function EditGenresModel(props) {
       const { data } = await axiosInstance.put(
         `/api/admin/updateGenre/${id}`,
         {
-          genre,
+          genre: genres,
           starter1,
           starter2,
           starter3,
@@ -96,7 +107,7 @@ export default function EditGenresModel(props) {
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Genre Description</Form.Label>
               <Form.Control
-                value={genre}
+                value={genres}
                 onChange={(e) => setGenre(e.target.value)}
               />
             </Form.Group>

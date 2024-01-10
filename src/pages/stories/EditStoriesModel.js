@@ -13,7 +13,7 @@ import { LoadingBox } from "../../components";
 export default function EditStoriesModel(props) {
   const navigate = useNavigate();
   const { state } = useContext(Store);
-  const { token } = state;
+  const { token, story } = state;
   const { id } = useParams(); // category/:id
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -25,6 +25,13 @@ export default function EditStoriesModel(props) {
   const [status, setStatus] = useState("");
   const [theme, setTheme] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(()=>{
+    setRoomName(story?.roomName?story.roomName:"");
+    setStatus(story?.status?story.status:"");
+    setTheme(story?.theme?story.theme:"");
+    setDescription(story?.description?story.description:"");
+  },[story])
 
   const resetForm = () => {
     setRoomName("");

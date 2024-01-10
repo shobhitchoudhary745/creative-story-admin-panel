@@ -13,18 +13,26 @@ import { LoadingBox } from "../../components";
 export default function EditUserModel(props) {
   const navigate = useNavigate();
   const { state } = useContext(Store);
-  const { token } = state;
+  const { token,user } = state;
   const { id } = useParams(); // category/:id
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
   });
-
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [countryCode, setCountryCode] = useState("");
   const [mobile, setMobile] = useState("");
+
+  useEffect(()=>{
+    setFirstName(user?.firstName?user.firstName:"");
+    setLastName(user?.lastName?user.lastName:"");
+    setCountryCode(user?.mobile_no?user.mobile_no.split(" ")[0]:"");
+    setMobile(user?.mobile_no?user.mobile_no.split(" ")[1]:"")
+  },[user])
+
+  
 
   const resetForm = () => {
     setFirstName("");

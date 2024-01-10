@@ -51,7 +51,9 @@ export default function Genres() {
           headers: { authorization: `Bearer ${token}` },
         });
 
-        toast.success("Genre Deleted Succesfully.");
+        toast.success("Genre Deleted Succesfully.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
 
         if ((genreLength - 1) % resultPerPage === 0 && curPage != 1) {
           setCurPage((p) => p - 1);
