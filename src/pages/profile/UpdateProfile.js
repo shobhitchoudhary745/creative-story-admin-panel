@@ -10,9 +10,9 @@ import { useNavigate } from "react-router-dom";
 export default function UpdateProfileModel(props) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { token, userInfo } = state;
-  const navigate = useNavigate();
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const navigate = useNavigate(); 
+  const [firstname, setFirstname] = useState(""); 
+  const [lastname, setLastname] = useState(""); 
   const [mobile_no, setMobileNo] = useState("");
   const [loadingUpdate, setLoadingUpdate] = useState(false);
   const [{ loading, error }, dispatch] = useReducer(reducer, {
