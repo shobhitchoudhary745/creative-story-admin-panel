@@ -416,7 +416,7 @@ pre {
 }
 
 .dashboard_cards{
-  width:23.5%;
+  width:23.7%;
   padding:22px;
   cursor: pointer;
   z-index:1;
@@ -425,13 +425,13 @@ pre {
 
 @media only screen and (min-width: 768px) and (max-width: 1025px) {
   .dashboard_cards {
-    width:47%;
+    width:48%;
   }
 }
 
 @media only screen and (max-width: 767px){
   .dashboard_cards{
-      width:90%;
+      width:100%;
       padding:23px;
   }
 }

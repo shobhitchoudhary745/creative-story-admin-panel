@@ -49,7 +49,7 @@ const Dashboard = () => {
         transition={{ duration: 0.75, ease: "easeInOut" }}
         exit={{ x: "100%" }}
       >
-        <Container className="m-3">
+        <Container fluid className="p-3">
           <h3 className="">Dashboard</h3>
           <hr />
 

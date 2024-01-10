@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function UpdateProfileModel(props) {
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { token } = state;
+  const { token, userInfo } = state;
   const navigate = useNavigate();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
@@ -19,6 +19,14 @@ export default function UpdateProfileModel(props) {
     loading: true,
     error: "",
   });
+
+  useEffect(()=>{
+    if(userInfo.firstName){
+      setFirstname(userInfo.firstName);
+      setLastname(userInfo.lastName);
+      setMobileNo(userInfo.mobile_no);
+    }
+  },[userInfo])
 
   useEffect(() => {
     const fetchData = async () => {
