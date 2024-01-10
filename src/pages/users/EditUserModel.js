@@ -13,7 +13,7 @@ import { LoadingBox } from "../../components";
 export default function EditUserModel(props) {
   const navigate = useNavigate();
   const { state } = useContext(Store);
-  const { token,user } = state;
+  const { token, user } = state;
   const { id } = useParams(); // category/:id
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
@@ -25,14 +25,12 @@ export default function EditUserModel(props) {
   const [countryCode, setCountryCode] = useState("");
   const [mobile, setMobile] = useState("");
 
-  useEffect(()=>{
-    setFirstName(user?.firstName?user.firstName:"");
-    setLastName(user?.lastName?user.lastName:"");
-    setCountryCode(user?.mobile_no?user.mobile_no.split(" ")[0]:"");
-    setMobile(user?.mobile_no?user.mobile_no.split(" ")[1]:"")
-  },[user])
-
-  
+  useEffect(() => {
+    setFirstName(user?.firstName ? user.firstName : "");
+    setLastName(user?.lastName ? user.lastName : "");
+    setCountryCode(user?.mobile_no ? user.mobile_no.split(" ")[0] : "");
+    setMobile(user?.mobile_no ? user.mobile_no.split(" ")[1] : "");
+  }, [user]);
 
   const resetForm = () => {
     setFirstName("");
@@ -41,6 +39,13 @@ export default function EditUserModel(props) {
     setMobile("");
   };
 
+  const changeHandler = (e) =>{
+    const value = e.target.value;
+    const isValid = /^[0-9]*$/.test(value);
+    if(isValid&&value.length<11){
+      setMobile(value);
+    }
+  }
   useEffect(() => {}, [id, props.show]);
 
   const submitHandler = async (e) => {
@@ -48,6 +53,11 @@ export default function EditUserModel(props) {
     if (!firstName && !lastName && !mobile && !countryCode) {
       toast.warning("Please fill atleast one fieled");
       return;
+    }
+    const isValidCode = /^\+\d{1,3}$/.test(countryCode);
+    if (!isValidCode) {
+      toast.warning("please enter valid country code");
+      return ;
     }
     try {
       //   dispatch({ type: "UPDATE_REQUEST" });
@@ -128,8 +138,9 @@ export default function EditUserModel(props) {
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Mobile no</Form.Label>
               <Form.Control
+                
                 value={mobile}
-                onChange={(e) => setMobile(e.target.value)}
+                onChange={changeHandler}
               />
             </Form.Group>
             <ToastContainer />

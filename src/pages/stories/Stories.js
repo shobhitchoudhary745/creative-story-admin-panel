@@ -26,7 +26,7 @@ export default function Stories() {
   const { stories, token, storyLength } = state;
   const [curPage, setCurPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
-  // const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [resultPerPage, setResultPerPage] = useState(5);
   const curPageHandler = (p) => setCurPage(p);
   const filteredCategoryCount = storyLength;
@@ -39,8 +39,8 @@ export default function Stories() {
     error: "",
   });
   useEffect(() => {
-    getAllStories(ctxDispatch, dispatch, token, resultPerPage, curPage);
-  }, [curPage,resultPerPage,token,del]);
+    getAllStories(ctxDispatch, dispatch, token, resultPerPage, curPage,searchInput);
+  }, [curPage,resultPerPage,token,del,query]);
 
   const deleteStory = async (id) => {
     if (
@@ -83,7 +83,7 @@ export default function Stories() {
                 <InputGroup>
                   <Form.Control
                     aria-label="Search Input"
-                    placeholder="Search"
+                    placeholder="Search by Room Name"
                     type="search"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
@@ -91,7 +91,7 @@ export default function Stories() {
                   <InputGroup.Text
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      // setQuery(searchInput);
+                      setQuery(searchInput);
                       setCurPage(1);
                     }}
                   >

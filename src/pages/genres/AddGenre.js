@@ -45,9 +45,12 @@ export default function AddGenre() {
         { headers: { authorization: `Bearer ${token}` } }
       );
       if (data.success) {
-        toast.success("Genre Added Succesfully.", {
+        toast.success("Genre Added Succesfully.  Redirecting...", {
             position: toast.POSITION.BOTTOM_CENTER,
-          });     
+          });   
+        setTimeout(()=>{
+          navigate("/admin/genres");
+        },1200)  
       }
       resetForm();
     } catch (err) {

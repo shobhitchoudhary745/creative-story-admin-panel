@@ -76,12 +76,13 @@ export const getAllUsers = async (
   dispatch,
   token,
   resultPerPage,
-  currentPage
+  currentPage,
+  searchInput
 ) => {
   try {
     dispatch({ type: "FETCH_REQUEST" });
     const { data } = await axiosInstance.get(
-      `/api/admin/getAllUsers?currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
+      `/api/admin/getAllUsers?key=${searchInput}&currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
       {
         headers: { authorization: `Bearer ${token}` },
       }
@@ -127,12 +128,13 @@ export const getAllStories = async (
   dispatch,
   token,
   resultPerPage,
-  currentPage
+  currentPage,
+  searchInput
 ) => {
   try {
     dispatch({ type: "FETCH_REQUEST" });
     const { data } = await axiosInstance.get(
-      `/api/admin/getAllStoryRooms?currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
+      `/api/admin/getAllStoryRooms?key=${searchInput}&currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
       {
         headers: { authorization: `Bearer ${token}` },
       }
@@ -179,12 +181,13 @@ export const getAllGenres = async (
   dispatch,
   token,
   resultPerPage,
-  currentPage
+  currentPage,
+  searchInput
 ) => {
   try {
     dispatch({ type: "FETCH_REQUEST" });
     const { data } = await axiosInstance.get(
-      `/api/admin/getAllGenres?currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
+      `/api/admin/getAllGenres?key=${searchInput}&currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
       {
         headers: { authorization: `Bearer ${token}` },
       }

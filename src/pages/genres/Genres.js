@@ -25,7 +25,7 @@ export default function Genres() {
   const { genres, token, genreLength } = state;
   const [curPage, setCurPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
-  // const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [resultPerPage, setResultPerPage] = useState(5);
   const curPageHandler = (p) => setCurPage(p);
   const filteredCategoryCount = genreLength;
@@ -38,8 +38,8 @@ export default function Genres() {
     error: "",
   });
   useEffect(() => {
-    getAllGenres(ctxDispatch, dispatch, token, resultPerPage, curPage);
-  }, [curPage, resultPerPage, token, del]);
+    getAllGenres(ctxDispatch, dispatch, token, resultPerPage, curPage,searchInput);
+  }, [curPage, resultPerPage, token, del,query]);
 
   const deleteGenre = async (id) => {
     if (
@@ -93,7 +93,7 @@ export default function Genres() {
                 <InputGroup>
                   <Form.Control
                     aria-label="Search Input"
-                    placeholder="Search"
+                    placeholder="Search by Genre"
                     type="search"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
@@ -101,7 +101,7 @@ export default function Genres() {
                   <InputGroup.Text
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      // setQuery(searchInput);
+                      setQuery(searchInput);
                       setCurPage(1);
                     }}
                   >

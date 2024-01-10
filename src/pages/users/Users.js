@@ -25,7 +25,7 @@ export default function Users() {
   const { users, token, userLength } = state;
   const [curPage, setCurPage] = useState(1);
   const [searchInput, setSearchInput] = useState("");
-  // const [query, setQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [resultPerPage, setResultPerPage] = useState(5);
   const curPageHandler = (p) => setCurPage(p);
   const filteredCategoryCount = userLength;
@@ -38,8 +38,15 @@ export default function Users() {
     error: "",
   });
   useEffect(() => {
-    getAllUsers(ctxDispatch, dispatch, token, resultPerPage, curPage);
-  }, [curPage, resultPerPage, token, del]);
+    getAllUsers(
+      ctxDispatch,
+      dispatch,
+      token,
+      resultPerPage,
+      curPage,
+      searchInput
+    );
+  }, [curPage, resultPerPage, token, del, query]);
 
   const deleteUser = async (id) => {
     if (window.confirm("Are you sure you want to delete this user?") === true) {
@@ -80,7 +87,7 @@ export default function Users() {
                 <InputGroup>
                   <Form.Control
                     aria-label="Search Input"
-                    placeholder="Search"
+                    placeholder="Search By firstname or lastname"
                     type="search"
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
@@ -88,7 +95,8 @@ export default function Users() {
                   <InputGroup.Text
                     style={{ cursor: "pointer" }}
                     onClick={() => {
-                      // setQuery(searchInput);
+                      // console.log("okkkkkkkk")
+                      setQuery(searchInput);
                       setCurPage(1);
                     }}
                   >

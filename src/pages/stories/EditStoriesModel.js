@@ -95,7 +95,7 @@ export default function EditStoriesModel(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">Edit User</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">Edit Story Room</Modal.Title>
       </Modal.Header>
       <Form onSubmit={submitHandler}>
         <Modal.Body>
