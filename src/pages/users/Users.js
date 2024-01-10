@@ -6,7 +6,6 @@ import {
   Form,
   InputGroup,
   Table,
-  ToastContainer,
 } from "react-bootstrap";
 import { getAllUsers } from "../../states/actions";
 import { reducer } from "../../states/reducers";
@@ -16,7 +15,7 @@ import { CustomPagination, CustomSkeleton, MessageBox } from "../../components";
 import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { getError } from "../../utils/error";
 import axiosInstance from "../../utils/axiosUtil";
 
@@ -32,7 +31,7 @@ export default function Users() {
   const filteredCategoryCount = userLength;
   const numOfPages = Math.ceil(filteredCategoryCount / resultPerPage);
   const skip = resultPerPage * (curPage - 1);
-  const [del,setDel]= useState(false);
+  const [del, setDel] = useState(false);
   // console.log("testing", users);
   const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,
@@ -40,14 +39,10 @@ export default function Users() {
   });
   useEffect(() => {
     getAllUsers(ctxDispatch, dispatch, token, resultPerPage, curPage);
-  }, [curPage,resultPerPage,token,del]);
+  }, [curPage, resultPerPage, token, del]);
 
   const deleteUser = async (id) => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete this user?"
-      ) === true
-    ) {
+    if (window.confirm("Are you sure you want to delete this user?") === true) {
       try {
         setDel(true);
         const res = await axiosInstance.delete(`/api/admin/deleteUser/${id}`, {
@@ -75,8 +70,10 @@ export default function Users() {
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
           <Card>
-            <Card.Header >
-              <div style={{fontWeight:"500"}} className="btn mt-1">Users</div>
+            <Card.Header>
+              <div style={{ fontWeight: "500" }} className="btn mt-1">
+                Users
+              </div>
               <div className="search-box float-end">
                 <InputGroup>
                   <Form.Control
@@ -189,7 +186,5 @@ export default function Users() {
         <ToastContainer />
       </Container>
     </motion.div>
-
- 
   );
 }

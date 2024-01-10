@@ -6,7 +6,7 @@ import {
   Form,
   InputGroup,
   Table,
-  ToastContainer,
+  
 } from "react-bootstrap";
 import { getAllStories } from "../../states/actions";
 import { reducer } from "../../states/reducers";
@@ -16,7 +16,7 @@ import { CustomPagination, CustomSkeleton, MessageBox } from "../../components";
 import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast,ToastContainer } from "react-toastify";
 import { getError } from "../../utils/error";
 import axiosInstance from "../../utils/axiosUtil";
 

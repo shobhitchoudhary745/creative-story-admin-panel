@@ -6,7 +6,6 @@ import {
   Form,
   InputGroup,
   Table,
-  ToastContainer,
 } from "react-bootstrap";
 import { getAllGenres } from "../../states/actions";
 import { reducer } from "../../states/reducers";
@@ -16,7 +15,7 @@ import { CustomPagination, CustomSkeleton, MessageBox } from "../../components";
 import { FaEye, FaSearch, FaTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { getError } from "../../utils/error";
 import axiosInstance from "../../utils/axiosUtil";
 
@@ -43,7 +42,6 @@ export default function Genres() {
   }, [curPage, resultPerPage, token, del]);
 
   const deleteGenre = async (id) => {
-    
     if (
       window.confirm("Are you sure you want to delete this genre?") === true
     ) {
@@ -52,12 +50,10 @@ export default function Genres() {
         const res = await axiosInstance.delete(`/api/admin/deleteGenre/${id}`, {
           headers: { authorization: `Bearer ${token}` },
         });
-        
-        toast.success("Genre Deleted Succesfully.", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+
+        toast.success("Genre Deleted Succesfully.");
+
         if ((genreLength - 1) % resultPerPage === 0 && curPage != 1) {
-          // console.log("first");
           setCurPage((p) => p - 1);
         }
         setDel(false);

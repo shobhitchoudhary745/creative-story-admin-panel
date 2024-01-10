@@ -2,6 +2,7 @@ import "./SideNavBar.css";
 import React, { useContext, useState } from "react";
 import { Store } from "../../states/store";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../../utils/creativestory.svg";
 import {
   MdCreateNewFolder,
   MdSchema,
@@ -105,10 +106,17 @@ export default function SideNavbar({ isExpanded }) {
           }
         >
           <div className="brand-link">
-            <img src="/favicon.ico" alt="" width={"40px"} height="auto" />
-            <span className="brand-text ms-2 font-weight-light">
-              Creative Story
-            </span>
+            <Link to="/admin/dashboard">
+              <img
+                src={logo}
+                alt=""
+                style={{ width: "50px", cursor: "pointer" }}
+                height="50px"
+              />
+              <span className={`brand-text ms-2 ${!isExpanded&&"d-none"} font-weight-light info-text`}>
+                Creative Story
+              </span>
+            </Link>
           </div>
 
           <div className="sidebar">
