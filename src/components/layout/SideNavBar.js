@@ -79,6 +79,7 @@ export default function SideNavbar({ isExpanded }) {
   };
   const navigate = useNavigate();
   const signoutHandler = (e) => {
+    e.preventDefault();
     if (window.confirm("Are you sure you want to Logout?") === true) {
       ctxDispatch({ type: "USER_SIGNOUT" });
       localStorage.removeItem("userInfo");

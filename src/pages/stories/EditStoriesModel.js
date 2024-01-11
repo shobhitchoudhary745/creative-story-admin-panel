@@ -9,17 +9,40 @@ import { Button, Container, Modal, Form } from "react-bootstrap";
 import axiosInstance from "../../utils/axiosUtil.js";
 
 import { LoadingBox } from "../../components";
+// import { getAllGenres } from "../../states/actions.js";
 
 export default function EditStoriesModel(props) {
   const navigate = useNavigate();
-  const { state } = useContext(Store);
-  const { token, story } = state;
+  const { state, dispatch: ctxDispatch } = useContext(Store);
+  const { token, story, genres } = state;
   const { id } = useParams(); // category/:id
+  
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
     loading: true,
     error: "",
   });
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const { data } = await axiosInstance("/api/genre/getAllGenre", {
+          headers: { authorization: `Bearer ${token}` },
+        });
+        if (data.success) {
+          ctxDispatch({
+            type: "GENRES_DATA_FETCH_SUCCESSFULLY",
+            payload: { genres: data.data, length: data.length },
+          });
+        }
+      } catch (err) {
+        toast.error(getError(err), {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+      }
+    };
+    fetchData();
+  }, [token]);
 
   const [roomName, setRoomName] = useState("");
   const [status, setStatus] = useState("");
@@ -123,12 +146,19 @@ export default function EditStoriesModel(props) {
                 <option value={"completed"}>Completed</option>
               </Form.Select>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="name">
+            <Form.Group className="mb-3">
               <Form.Label>Theme</Form.Label>
-              <Form.Control
+              <Form.Select
                 value={theme}
-                onChange={(e) => setTheme(e.target.value)}
-              />
+                onChange={(e) => {
+                  setTheme(e.target.value);
+                }}
+                aria-label="Default select example"
+              >
+                {genres.map((data, index) => {
+                  return <option key={index} value={data.genre}>{data.genre}</option>;
+                })}
+              </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Description</Form.Label>

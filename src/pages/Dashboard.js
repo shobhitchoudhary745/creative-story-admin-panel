@@ -57,8 +57,8 @@ const Dashboard = () => {
             className={`d-flex ${loading && " items-center"} flex-wrap gap-3`}
           >
             {loading
-              ? dummyArray.map((data) => {
-                return(<div className="dashboard_cards"><Skeleton height={200} /></div>)
+              ? dummyArray.map((data,index) => {
+                return(<div key={index} className="dashboard_cards"><Skeleton height={200} /></div>)
               })
               : dashboardData.map((data, index) => {
                   return (

@@ -15,7 +15,6 @@ import Skeleton from "react-loading-skeleton";
 const ViewProfile = () => {
   const { state } = useContext(Store);
   const { userInfo} = state;
-  console.log(userInfo);
   const [modalShow, setModalShow] = useState(false);
   const [{ loading, error }, dispatch] = useReducer(reducer, {
     loading: false,

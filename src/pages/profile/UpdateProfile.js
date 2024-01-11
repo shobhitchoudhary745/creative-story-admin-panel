@@ -28,35 +28,36 @@ export default function UpdateProfileModel(props) {
     }
   },[userInfo])
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        dispatch({ type: "FETCH_REQUEST" });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       dispatch({ type: "FETCH_REQUEST" });
 
-        const { data } = await axiosInstance.get("/api/user/user-profile", {
-          headers: { Authorization: token },
-        });
+  //       const { data } = await axiosInstance.get("/api/user/user-profile", {
+  //         headers: { authorization: `Bearer ${token}` },
+  //       });
 
-        const user = data.user;
+  //       const user = data.user;
 
-        setFirstname(user.firstname);
-        setLastname(user.lastname);
-        // setFax(user.fax);
-        setMobileNo(user.mobile_no);
+  //       setFirstname(user.firstname);
+  //       setLastname(user.lastname);
+  //       // setFax(user.fax);
+  //       setMobileNo(user.mobile_no);
 
-        dispatch({ type: "FETCH_SUCCESS" });
-      } catch (err) {
-        dispatch({
-          type: "FETCH_FAIL",
-          payload: getError(err),
-        });
-        toast.error(getError(error), {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
-      }
-    };
-    fetchData();
-  }, [token, props.show]);
+  //       dispatch({ type: "FETCH_SUCCESS" });
+  //     } catch (err) {
+  //       dispatch({
+  //         type: "FETCH_FAIL",
+  //         payload: getError(err),
+  //       });
+  //       toast.error(getError(error), {
+  //         position: toast.POSITION.BOTTOM_CENTER,
+  //       });
+  //     }
+  //   };
+  //   if(token)
+  //   fetchData();
+  // }, [token, props.show]);
 
   const resetForm = () => {
     setFirstname("");
