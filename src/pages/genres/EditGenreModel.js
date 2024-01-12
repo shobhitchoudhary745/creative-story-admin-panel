@@ -4,7 +4,7 @@ import { getError } from "../../utils/error.js";
 import { reducer } from "../../states/reducers";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Button, Container, Modal, Form } from "react-bootstrap";
+import { Button, Container, Modal, Form, Spinner } from "react-bootstrap";
 
 import axiosInstance from "../../utils/axiosUtil.js";
 
@@ -15,6 +15,7 @@ export default function EditGenresModel(props) {
   const { state } = useContext(Store);
   const { token, genre } = state;
   const { id } = useParams(); // category/:id
+  const [load, setLoad] = useState(false);
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -26,16 +27,14 @@ export default function EditGenresModel(props) {
   const [starter2, setStarter2] = useState("");
   const [starter3, setStarter3] = useState("");
 
-  useEffect(()=>{
-    if(genre.starter&&genre.starter){
-      setGenre(genre?.genre?genre.genre:"");
-      setStarter1(genre?.starter[0]?genre.starter[0]:"");
-      setStarter2(genre?.starter[1]?genre.starter[1]:"");
-      setStarter3(genre?.starter[2]?genre.starter[2]:"");
+  useEffect(() => {
+    if (genre.starter && genre.starter) {
+      setGenre(genre?.genre ? genre.genre : "");
+      setStarter1(genre?.starter[0] ? genre.starter[0] : "");
+      setStarter2(genre?.starter[1] ? genre.starter[1] : "");
+      setStarter3(genre?.starter[2] ? genre.starter[2] : "");
     }
-   
-
-  },[genre])
+  }, [genre]);
 
   const resetForm = () => {
     setGenre("");
@@ -54,6 +53,7 @@ export default function EditGenresModel(props) {
     }
     try {
       //   dispatch({ type: "UPDATE_REQUEST" });
+      setLoad(true);
       const { data } = await axiosInstance.put(
         `/api/admin/updateGenre/${id}`,
         {
@@ -74,6 +74,7 @@ export default function EditGenresModel(props) {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         resetForm();
+        setLoad(false);
         setTimeout(() => {
           navigate("/admin/genres");
           //   dispatch({ type: "UPDATE_SUCCESS" });
@@ -84,6 +85,7 @@ export default function EditGenresModel(props) {
         });
       }
     } catch (err) {
+      setLoad(false);
       //   dispatch({ type: "UPDATE_FAIL" });
       toast.error(getError(err), {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -140,12 +142,8 @@ export default function EditGenresModel(props) {
           <Button variant="danger" onClick={props.onHide}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={loadingUpdate ? true : false}
-          >
-            Submit
+          <Button variant="primary" type="submit">
+            {load ? <Spinner animation="border" size="sm" /> : "Submit"}
           </Button>
           {loadingUpdate && <LoadingBox></LoadingBox>}
         </Modal.Footer>

@@ -4,7 +4,7 @@ import { getError } from "../../utils/error.js";
 import { reducer } from "../../states/reducers";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
-import { Button, Container, Modal, Form } from "react-bootstrap";
+import { Button, Container, Modal, Form, Spinner } from "react-bootstrap";
 
 import axiosInstance from "../../utils/axiosUtil.js";
 
@@ -15,6 +15,7 @@ export default function EditUserModel(props) {
   const { state } = useContext(Store);
   const { token, user } = state;
   const { id } = useParams(); // category/:id
+  const [load, setLoad] = useState(false);
 
   const [{ loading, error, loadingUpdate }, dispatch] = useReducer(reducer, {
     loading: true,
@@ -61,6 +62,7 @@ export default function EditUserModel(props) {
     }
     try {
       //   dispatch({ type: "UPDATE_REQUEST" });
+      setLoad(true)
       const { data } = await axiosInstance.put(
         `/api/admin/updateUser/${id}`,
         {
@@ -77,6 +79,7 @@ export default function EditUserModel(props) {
       );
       // console.log(data);
       if (data.success) {
+        setLoad(false)
         toast.success("User Profile Updated Succesfully.  Redirecting...", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
@@ -86,6 +89,7 @@ export default function EditUserModel(props) {
           //   dispatch({ type: "UPDATE_SUCCESS" });
         }, 3000);
       } else {
+        setLoad(false);
         toast.error(data.error.message, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
@@ -150,12 +154,8 @@ export default function EditUserModel(props) {
           <Button variant="danger" onClick={props.onHide}>
             Close
           </Button>
-          <Button
-            variant="primary"
-            type="submit"
-            disabled={loadingUpdate ? true : false}
-          >
-            Submit
+          <Button variant="primary" type="submit">
+            {load ? <Spinner animation="border" size="sm" /> : "Submit"}
           </Button>
           {loadingUpdate && <LoadingBox></LoadingBox>}
         </Modal.Footer>

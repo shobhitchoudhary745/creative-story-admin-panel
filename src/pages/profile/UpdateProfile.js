@@ -181,7 +181,7 @@ export default function UpdateProfileModel(props) {
             Close
           </Button>
           <Button variant="primary" type="submit">
-            {loadingUpdate ? (
+            {loadingUpdate ? ( 
               <Spinner animation="border" size="sm" />
             ) : (
               "Submit"
