@@ -2,6 +2,7 @@
 @import 'react-loading-skeleton/dist/skeleton.css';
 @import "react-toastify/dist/ReactToastify.css";
 
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -434,4 +435,12 @@ pre {
       width:100%;
       padding:23px;
   }
+}
+
+.ql-editor {
+  min-height: 500px;
+}
+
+.ql-align-center{
+  text-align: center;
 }

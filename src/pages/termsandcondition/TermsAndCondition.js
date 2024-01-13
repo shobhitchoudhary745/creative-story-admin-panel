@@ -37,25 +37,28 @@ export default function TermsAndCondition() {
       transition={{ duration: 0.75, ease: "easeInOut" }}
       exit={{ x: "100%" }}
     >
-    <Container>
-      <div className="d-flex mt-2 justify-content-between">
-        <div>
-          <h5>Terms & Condition Content</h5>
-        </div>
-        <div className="card-tools">
-          <FaEdit
-            style={{ color: "blue" }}
-            size={20}
-            onClick={() => setModalShow(true)}
-          />
-        </div>
-      </div>
-      <div dangerouslySetInnerHTML={{ __html: termsAndCondition }} />
-      <EditTermsAndConditionModel
-        show={modalShow}
-        onHide={() => setModalShow(false)}
-      />
-    </Container>
+      <Container>
+        {!modalShow && (
+          <div>
+            <div className="d-flex mt-2 justify-content-between">
+              <div>
+                <h5>Terms & Condition Content</h5>
+              </div>
+              <div className="card-tools">
+                <FaEdit
+                  style={{ color: "blue" }}
+                  size={20}
+                  onClick={() => setModalShow(true)}
+                />
+              </div>
+            </div>
+            <div dangerouslySetInnerHTML={{ __html: termsAndCondition }} />
+          </div>
+        )}
+        {modalShow && (
+          <EditTermsAndConditionModel onHide={() => setModalShow(false)} />
+        )}
+      </Container>
     </motion.div>
   );
 }

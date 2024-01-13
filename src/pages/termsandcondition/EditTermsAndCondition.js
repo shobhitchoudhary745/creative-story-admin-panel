@@ -9,6 +9,8 @@ import { Button, Container, Modal, Form, Spinner } from "react-bootstrap";
 import axiosInstance from "../../utils/axiosUtil.js";
 
 import { LoadingBox } from "../../components";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function EditTermsAndConditionModel(props) {
   const navigate = useNavigate();
@@ -29,8 +31,54 @@ export default function EditTermsAndConditionModel(props) {
   const resetForm = () => {
     setContent("");
   };
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
+      ["bold", "italic", "underline", "strike"],
+      ["link", "image", "video"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["blockquote", "code-block"],
+      [{ color: [] }, { background: [] }],
+      ["clean"],
+      ["paragraph"],
+      [{ align: [] }],
+      [{ font: [] }],
+      [{ script: "sub" }, { script: "super" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ direction: "rtl" }],
+    ],
+  };
 
-  useEffect(() => {}, [id, props.show]);
+  const formats = [
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "code-block",
+    "list",
+    "bullet",
+    "link",
+    "image",
+    "video",
+    "font",
+    "align",
+    "color",
+    "background",
+    "header",
+    "indent",
+    "size",
+    "script",
+    "clean",
+    "code",
+    "direction",
+  ];
+  
+
+  const handleChange = (value) => {
+    setContent(value);
+    console.log(value);
+  };
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -40,7 +88,7 @@ export default function EditTermsAndConditionModel(props) {
     }
     try {
       //   dispatch({ type: "UPDATE_REQUEST" });
-      setLoad(true)
+      setLoad(true);
       const { data } = await axiosInstance.put(
         `/api/admin/updateTermsAndCondition`,
         {
@@ -54,7 +102,7 @@ export default function EditTermsAndConditionModel(props) {
       );
       // console.log(data);
       if (data.success) {
-        setLoad(false)
+        setLoad(false);
         toast.success("Terms & Condition Content Updated Succesfully", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
@@ -62,15 +110,15 @@ export default function EditTermsAndConditionModel(props) {
         setTimeout(() => {
           props.onHide();
           //   dispatch({ type: "UPDATE_SUCCESS" });
-        }, 1200);
+        }, 1500);
       } else {
-        setLoad(false)
+        setLoad(false);
         toast.error(data.error.message, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
       }
     } catch (err) {
-      setLoad(false)
+      setLoad(false);
       //   dispatch({ type: "UPDATE_FAIL" });
       toast.error(getError(err), {
         position: toast.POSITION.BOTTOM_CENTER,
@@ -79,43 +127,23 @@ export default function EditTermsAndConditionModel(props) {
   };
 
   return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Edit Terms & Condition
-        </Modal.Title>
-      </Modal.Header>
-      <Form onSubmit={submitHandler}>
-        <Modal.Body>
-          <Container className="small-container">
-            <Form.Group className="mb-3" controlId="name">
-              <Form.Label>Content</Form.Label>
-              <Form.Control
-                as="textarea"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                style={{ height: "200px" }}
-              />
-            </Form.Group>
-
-            <ToastContainer />
-          </Container>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="danger" onClick={props.onHide}>
-            Close
-          </Button>
-          <Button variant="primary" type="submit">
-            {load ? <Spinner animation="border" size="sm" /> : "Submit"}
-          </Button>
-          {loadingUpdate && <LoadingBox></LoadingBox>}
-        </Modal.Footer>
-      </Form>
-    </Modal>
+    <div className="m-3">
+      <ReactQuill
+        value={content}
+        onChange={handleChange}
+        modules={modules}
+        formats={formats}
+        style={{ border: "1px solid black" }}
+      />
+      <div className="m-2 d-flex gap-1 justify-content-end">
+        <Button onClick={() => props.onHide()} variant="danger">
+          Cancel
+        </Button>
+        <Button onClick={submitHandler} variant="primary">
+          {load ? <Spinner animation="border" size="sm" /> : "Submit"}
+        </Button>
+        <ToastContainer />
+      </div>
+    </div>
   );
 }

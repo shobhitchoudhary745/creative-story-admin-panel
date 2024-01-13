@@ -36,23 +36,24 @@ export default function PrivacyPolicy() {
       exit={{ x: "100%" }}
     >
       <Container>
-        <div className="d-flex mt-2 justify-content-between">
-          <div>
-            <h5>Privacy Policy Content</h5>
+        {!modalShow&&<div>
+          <div className="d-flex mt-2 justify-content-between">
+            <div>
+              <h5>Privacy Policy Content</h5>
+            </div>
+            <div className="card-tools">
+              <FaEdit
+                style={{ color: "blue" }}
+                size={20}
+                onClick={() => setModalShow(true)}
+              />
+            </div>
           </div>
-          <div className="card-tools">
-            <FaEdit
-              style={{ color: "blue" }}
-              size={20}
-              onClick={() => setModalShow(true)}
-            />
-          </div>
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
-        <EditPrivacyPolicyModel
-          show={modalShow}
+          <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
+        </div>}
+        {modalShow&&<EditPrivacyPolicyModel
           onHide={() => setModalShow(false)}
-        />
+        />}
       </Container>
     </motion.div>
   );
