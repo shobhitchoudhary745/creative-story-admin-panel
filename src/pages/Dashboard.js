@@ -50,7 +50,7 @@ const Dashboard = () => {
         exit={{ x: "100%" }}
       >
         <Container fluid className="p-3">
-          <h3 className="">Dashboard</h3>
+          <h3>{loading?<Skeleton/>:"Dashboard"}</h3>
           <hr />
 
           <div

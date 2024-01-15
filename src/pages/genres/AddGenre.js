@@ -13,6 +13,7 @@ export default function AddGenre() {
   const navigate = useNavigate();
   const [genre, setGenre] = useState("");
   const [starter, setStarter] = useState("");
+  const [colour,setColour] = useState("")
   const [starterArray, setStarterArray] = useState([]);
   const [load, setLoad] = useState(false);
 
@@ -20,6 +21,7 @@ export default function AddGenre() {
     setGenre("");
     setStarter("");
     setStarterArray([]);
+    setColour("");
   };
 
   const submitHandler = async (e) => {
@@ -35,6 +37,7 @@ export default function AddGenre() {
         {
           genre,
           starter: starterArray,
+          colour
         },
         { headers: { authorization: `Bearer ${token}` } }
       );
@@ -91,6 +94,15 @@ export default function AddGenre() {
                       value={genre}
                       onChange={(e) => setGenre(e.target.value)}
                       required
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Colour</Form.Label>
+                    <Form.Control
+                      value={colour}
+                      onChange={(e) => setColour(e.target.value)}
+                      required
+                      type="color"
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">
