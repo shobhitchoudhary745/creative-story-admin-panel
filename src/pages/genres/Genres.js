@@ -137,9 +137,9 @@ export default function Genres() {
                       <tr key={i} className="odd">
                         <td className="text-center">{skip + i + 1}</td>
                         <td>{genre.genre}</td>
-                        <td>{genre.starter[0]}</td>
-                        <td>{genre.starter[1]}</td>
-                        <td>{genre.starter[2]}</td>
+                        <td>{genre.starter[0].starter||""}</td>
+                        <td>{genre.starter[1].starter||""}</td>
+                        <td>{genre.starter[2].starter||""}</td>
                         <td>
                           <Button
                             onClick={() => {

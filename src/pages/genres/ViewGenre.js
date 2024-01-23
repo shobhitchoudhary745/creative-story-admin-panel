@@ -81,19 +81,19 @@ const ViewGenre = () => {
                         <p className="mb-0">
                           <strong>Starter 1</strong>
                         </p>
-                        <p>{loading ? <Skeleton /> : genre.starter[0]}</p>
+                        <p>{loading ? <Skeleton /> : genre.starter[0].starter}</p>
                       </Col>
                       <Col md={3}>
                         <p className="mb-0">
                           <strong>Starter 2</strong>
                         </p>
-                        <p>{loading ? <Skeleton /> : genre.starter[1]}</p>
+                        <p>{loading ? <Skeleton /> : genre.starter[1].starter}</p>
                       </Col>
                       <Col md={3}>
                         <p className="mb-0">
                           <strong>Starter 3</strong>
                         </p>
-                        <p>{loading ? <Skeleton /> : genre.starter[2]}</p>
+                        <p>{loading ? <Skeleton /> : genre.starter[2].starter}</p>
                       </Col>
                       
                       

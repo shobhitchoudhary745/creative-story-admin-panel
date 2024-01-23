@@ -27,13 +27,19 @@ export default function EditGenresModel(props) {
   const [starter1, setStarter1] = useState("");
   const [starter2, setStarter2] = useState("");
   const [starter3, setStarter3] = useState("");
+  const [description1, setDescription1] = useState("");
+  const [description2, setDescription2] = useState("");
+  const [description3, setDescription3] = useState("");
 
   useEffect(() => {
     if (genre.starter && genre.starter) {
       setGenre(genre?.genre ? genre.genre : "");
-      setStarter1(genre?.starter[0] ? genre.starter[0] : "");
-      setStarter2(genre?.starter[1] ? genre.starter[1] : "");
-      setStarter3(genre?.starter[2] ? genre.starter[2] : "");
+      setStarter1(genre?.starter[0] ? genre.starter[0].starter : "");
+      setStarter2(genre?.starter[1] ? genre.starter[1].starter : "");
+      setStarter3(genre?.starter[2] ? genre.starter[2].starter : "");
+      setDescription1(genre?.starter[0] ? genre.starter[0].description : "");
+      setDescription2(genre?.starter[1] ? genre.starter[1].description : "");
+      setDescription3(genre?.starter[2] ? genre.starter[2].description : "");
       setColour(genre?.colour ? genre.colour : "");
     }
   }, [genre]);
@@ -43,6 +49,9 @@ export default function EditGenresModel(props) {
     setStarter1("");
     setStarter2("");
     setStarter3("");
+    setDescription1("");
+    setDescription2("");
+    setDescription3("");
     setColour("");
   };
 
@@ -64,7 +73,10 @@ export default function EditGenresModel(props) {
           starter1,
           starter2,
           starter3,
-          colour
+          description1,
+          description2,
+          description3,
+          colour,
         },
         {
           headers: {
@@ -133,6 +145,13 @@ export default function EditGenresModel(props) {
                 onChange={(e) => setStarter1(e.target.value)}
               />
             </Form.Group>
+            <Form.Group className="mb-3" controlId="description">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                value={description1}
+                onChange={(e) => setDescription1(e.target.value)}
+              />
+            </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Starter 2</Form.Label>
               <Form.Control
@@ -141,10 +160,24 @@ export default function EditGenresModel(props) {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                value={description2}
+                onChange={(e) => setDescription2(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="name">
               <Form.Label>Starter 3</Form.Label>
               <Form.Control
                 value={starter3}
                 onChange={(e) => setStarter3(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                value={description3}
+                onChange={(e) => setDescription3(e.target.value)}
               />
             </Form.Group>
             <ToastContainer />

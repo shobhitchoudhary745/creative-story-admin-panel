@@ -1,6 +1,14 @@
 import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
-import { Card, Col, Container, Row, Form, Button, Spinner } from "react-bootstrap";
+import {
+  Card,
+  Col,
+  Container,
+  Row,
+  Form,
+  Button,
+  Spinner,
+} from "react-bootstrap";
 import axiosInstance from "../../utils/axiosUtil";
 import { toast, ToastContainer } from "react-toastify";
 import { Store } from "../../states/store";
@@ -13,7 +21,8 @@ export default function AddGenre() {
   const navigate = useNavigate();
   const [genre, setGenre] = useState("");
   const [starter, setStarter] = useState("");
-  const [colour,setColour] = useState("")
+  const [description, setDescription] = useState("");
+  const [colour, setColour] = useState("");
   const [starterArray, setStarterArray] = useState([]);
   const [load, setLoad] = useState(false);
 
@@ -22,6 +31,7 @@ export default function AddGenre() {
     setStarter("");
     setStarterArray([]);
     setColour("");
+    setDescription("")
   };
 
   const submitHandler = async (e) => {
@@ -37,12 +47,12 @@ export default function AddGenre() {
         {
           genre,
           starter: starterArray,
-          colour
+          colour,
         },
         { headers: { authorization: `Bearer ${token}` } }
       );
       if (data.success) {
-        setLoad(false)
+        setLoad(false);
         toast.success("Genre Added Succesfully.  Redirecting...", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
@@ -60,9 +70,12 @@ export default function AddGenre() {
   };
 
   const addStarter = (e) => {
-    if (starter.length) {
-      setStarterArray((p) => [...p, starter]);
+    if (starter.length && description.length) {
+      // let temp = starterArray;
+      // temp.push({starter,description});
+      setStarterArray(p=>[...p,{starter,description}]);
       setStarter("");
+      setDescription("");
     }
   };
 
@@ -112,12 +125,19 @@ export default function AddGenre() {
                       onChange={(e) => setStarter(e.target.value)}
                     />
                   </Form.Group>
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Description</Form.Label>
+                    <Form.Control
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                    />
+                  </Form.Group>
                   <Button onClick={addStarter} variant="primary">
                     Add Starter
                   </Button>
                   <ul>
                     {starterArray.map((data, index) => {
-                      return <li key={index}>{data}</li>;
+                      return <li key={index}>{data.starter}</li>;
                     })}
                   </ul>
                 </Card.Body>
