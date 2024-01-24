@@ -24,18 +24,45 @@ export default function AddGenre() {
   const [description, setDescription] = useState("");
   const [colour, setColour] = useState("");
   const [starterArray, setStarterArray] = useState([]);
+  const [backgroundColour, setBackgroundColour] = useState("");
+  const [image, setImage] = useState("");
   const [load, setLoad] = useState(false);
 
+  
   const resetForm = (e) => {
     setGenre("");
     setStarter("");
     setStarterArray([]);
     setColour("");
-    setDescription("")
+    setDescription("");
+  };
+
+  const fileHandler = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        setImage(file);
+      } else {
+        toast.warning("Please select a valid image file.");
+        e.target.value = null;
+        return;
+      }
+    }
+
+    if (e.target.files.length > 1) {
+      toast.warning("Please select only one file.");
+      e.target.value = null;
+    }
   };
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("genre", genre);
+    formData.append('starter', JSON.stringify(starterArray));
+    formData.append("colour", colour);
+    formData.append("backgroundColour", backgroundColour);
+    formData.append("image", image);
     if (starterArray.length === 0) {
       toast.warning("Please add atleast one starter");
       return;
@@ -44,11 +71,7 @@ export default function AddGenre() {
       setLoad(true);
       const { data } = await axiosInstance.post(
         "/api/genre/addGenre",
-        {
-          genre,
-          starter: starterArray,
-          colour,
-        },
+        formData,
         { headers: { authorization: `Bearer ${token}` } }
       );
       if (data.success) {
@@ -73,7 +96,7 @@ export default function AddGenre() {
     if (starter.length && description.length) {
       // let temp = starterArray;
       // temp.push({starter,description});
-      setStarterArray(p=>[...p,{starter,description}]);
+      setStarterArray((p) => [...p, { starter, description }]);
       setStarter("");
       setDescription("");
     }
@@ -116,6 +139,25 @@ export default function AddGenre() {
                       onChange={(e) => setColour(e.target.value)}
                       required
                       type="color"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Background Colour</Form.Label>
+                    <Form.Control
+                      value={backgroundColour}
+                      onChange={(e) => setBackgroundColour(e.target.value)}
+                      required
+                      type="color"
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3" controlId="name">
+                    <Form.Label>Image</Form.Label>
+                    <Form.Control
+                      // value={image}
+                      onChange={fileHandler}
+                      required
+                      type="file"
+                      accept="image/*"
                     />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">

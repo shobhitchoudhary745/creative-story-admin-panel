@@ -30,6 +30,8 @@ export default function EditGenresModel(props) {
   const [description1, setDescription1] = useState("");
   const [description2, setDescription2] = useState("");
   const [description3, setDescription3] = useState("");
+  const [backgroundColour, setBackgroundColour] = useState("");
+  const [image, setImage] = useState("");
 
   useEffect(() => {
     if (genre.starter && genre.starter) {
@@ -41,6 +43,9 @@ export default function EditGenresModel(props) {
       setDescription2(genre?.starter[1] ? genre.starter[1].description : "");
       setDescription3(genre?.starter[2] ? genre.starter[2].description : "");
       setColour(genre?.colour ? genre.colour : "");
+      setBackgroundColour(
+        genre?.backgroundColour ? genre.backgroundColour : ""
+      );
     }
   }, [genre]);
 
@@ -53,6 +58,25 @@ export default function EditGenresModel(props) {
     setDescription2("");
     setDescription3("");
     setColour("");
+    setBackgroundColour("");
+  };
+
+  const fileHandler = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      if (file.type.startsWith("image/")) {
+        setImage(file);
+      } else {
+        toast.warning("Please select a valid image file.");
+        e.target.value = null;
+        return;
+      }
+    }
+
+    if (e.target.files.length > 1) {
+      toast.warning("Please select only one file.");
+      e.target.value = null;
+    }
   };
 
   useEffect(() => {}, [id, props.show]);
@@ -66,18 +90,21 @@ export default function EditGenresModel(props) {
     try {
       //   dispatch({ type: "UPDATE_REQUEST" });
       setLoad(true);
+      const formData = new FormData();
+      formData.append("genre", genre);
+      formData.append("starter1", starter1);
+      formData.append("starter2", starter2);
+      formData.append("starter3", starter3);
+      formData.append("description1", description1);
+      formData.append("description2", description2);
+      formData.append("description3", description3);
+      // formData.append("starter", JSON.stringify(starterArray));
+      formData.append("colour", colour);
+      formData.append("backgroundColour", backgroundColour);
+      formData.append("image", image);
       const { data } = await axiosInstance.put(
         `/api/admin/updateGenre/${id}`,
-        {
-          genre: genres,
-          starter1,
-          starter2,
-          starter3,
-          description1,
-          description2,
-          description3,
-          colour,
-        },
+        formData,
         {
           headers: {
             authorization: `Bearer ${token}`,
@@ -135,6 +162,26 @@ export default function EditGenresModel(props) {
                 value={colour}
                 onChange={(e) => setColour(e.target.value)}
                 type="color"
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Background Colour</Form.Label>
+              <Form.Control
+                value={backgroundColour}
+                onChange={(e) => setBackgroundColour(e.target.value)}
+                required
+                type="color"
+              />
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="name">
+              <Form.Label>Image</Form.Label>
+              <Form.Control
+                // value={image}
+                onChange={fileHandler}
+                required
+                type="file"
+                accept="image/*"
               />
             </Form.Group>
 
