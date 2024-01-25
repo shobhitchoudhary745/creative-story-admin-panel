@@ -91,7 +91,7 @@ export default function EditGenresModel(props) {
       //   dispatch({ type: "UPDATE_REQUEST" });
       setLoad(true);
       const formData = new FormData();
-      formData.append("genre", genre);
+      formData.append("genre", genres);
       formData.append("starter1", starter1);
       formData.append("starter2", starter2);
       formData.append("starter3", starter3);
@@ -170,7 +170,7 @@ export default function EditGenresModel(props) {
               <Form.Control
                 value={backgroundColour}
                 onChange={(e) => setBackgroundColour(e.target.value)}
-                required
+                // required
                 type="color"
               />
             </Form.Group>
@@ -179,7 +179,7 @@ export default function EditGenresModel(props) {
               <Form.Control
                 // value={image}
                 onChange={fileHandler}
-                required
+                // required
                 type="file"
                 accept="image/*"
               />
