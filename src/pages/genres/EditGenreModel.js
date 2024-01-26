@@ -83,7 +83,7 @@ export default function EditGenresModel(props) {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if (!genre && !starter1 && !starter2 && !starter3) {
+    if (!genre && !starter1 && !starter2 && !starter3 &&!description1&&!description2&&!description3) {
       toast.warning("Please fill atleast one fieled");
       return;
     }
