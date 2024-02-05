@@ -50,7 +50,7 @@ export default function Banners() {
 
   const deleteGenre = async (id) => {
     if (
-      window.confirm("Are you sure you want to delete this genre?") === true
+      window.confirm("Are you sure you want to delete this Banner?") === true
     ) {
       try {
         setDel(true);
