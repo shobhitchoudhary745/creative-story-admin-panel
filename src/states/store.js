@@ -19,6 +19,9 @@ const initialState = {
   genres: [],
   genreLength: 0,
   genre: {},
+  banners: [],
+  bannerLength: 0,
+  banner: {},
   privacyPolicy: "",
   termsAndCondition: "",
 };
@@ -60,17 +63,28 @@ function reducer(state, action) {
         ...state,
         story: action.payload.story,
       };
-      case "GENRES_DATA_FETCH_SUCCESSFULLY":
-        return {
-          ...state,
-          genres: action.payload.genres,
-          genreLength: action.payload.length,
-        };
-      case "GENRE_DATA_FETCH_SUCCESSFULLY":
-        return {
-          ...state,
-          genre: action.payload.genre,
-        };
+    case "GENRES_DATA_FETCH_SUCCESSFULLY":
+      return {
+        ...state,
+        genres: action.payload.genres,
+        genreLength: action.payload.length,
+      };
+    case "GENRE_DATA_FETCH_SUCCESSFULLY":
+      return {
+        ...state,
+        genre: action.payload.genre,
+      };
+    case "BANNERS_DATA_FETCH_SUCCESSFULLY":
+      return {
+        ...state,
+        banners: action.payload.banners,
+        bannerLength: action.payload.length,
+      };
+    case "BANNER_DATA_FETCH_SUCCESSFULLY":
+      return {
+        ...state,
+        banner: action.payload.banner,
+      };
     case "FETCH_PRIVACY_POLICY":
       return {
         ...state,

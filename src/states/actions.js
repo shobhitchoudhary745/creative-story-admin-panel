@@ -228,3 +228,56 @@ export const getGenre = async (ctxDispatch, dispatch, token, id) => {
     dispatch({ type: "FETCH_FAIL", payload: getError(err) });
   }
 };
+
+export const getAllBanners = async (
+  ctxDispatch,
+  dispatch,
+  token,
+  resultPerPage,
+  currentPage,
+  searchInput
+) => {
+  try {
+    dispatch({ type: "FETCH_REQUEST" });
+    const { data } = await axiosInstance.get(
+      `/api/banner/get-banners?key=${searchInput}&currentPage=${currentPage}&resultPerPage=${resultPerPage}`,
+      {
+        headers: { authorization: `Bearer ${token}` },
+      }
+    );
+    // console.log(data);
+    if (data.success) {
+      ctxDispatch({
+        type: "BANNERS_DATA_FETCH_SUCCESSFULLY",
+        payload: { banners: data.banners, length: data.length },
+      });
+      dispatch({ type: "FETCH_SUCCESS" });
+    } else {
+      dispatch({ type: "FETCH_FAIL", payload: getError(data) });
+    }
+  } catch (err) {
+    dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+  }
+};
+
+export const getBanner = async (ctxDispatch, dispatch, token, id) => {
+  try {
+    // console.log("in this route");
+    dispatch({ type: "FETCH_REQUEST" });
+    const { data } = await axiosInstance.get(`/api/banner/get-banner/${id}`, {
+      headers: { authorization: `Bearer ${token}` },
+    });
+    // console.log(data);
+    if (data.success) {
+      ctxDispatch({
+        type: "BANNER_DATA_FETCH_SUCCESSFULLY",
+        payload: { banner: data.banner },
+      });
+      dispatch({ type: "FETCH_SUCCESS" });
+    } else {
+      dispatch({ type: "FETCH_FAIL", payload: getError(data) });
+    }
+  } catch (err) {
+    dispatch({ type: "FETCH_FAIL", payload: getError(err) });
+  }
+};

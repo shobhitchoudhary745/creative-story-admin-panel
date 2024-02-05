@@ -15,6 +15,9 @@ import PrivacyPolicy from "./pages/privacypolicy/PrivacyPolicy";
 import TermsAndCondition from "./pages/termsandcondition/TermsAndCondition";
 import ViewGenre from "./pages/genres/ViewGenre";
 import AddGenre from "./pages/genres/AddGenre";
+import Banners from "./pages/banners/Banners";
+import AddBanner from "./pages/banners/AddBanner";
+import ViewBanner from "./pages/banners/ViewBanner";
 
 function App() {
   const { state } = useContext(Store);
@@ -75,6 +78,22 @@ function App() {
             }
           />
           <Route
+            path="/admin/banners"
+            element={
+              <AdminProtectedRoute>
+                <Banners />
+              </AdminProtectedRoute>
+            }
+          />
+           <Route
+            exact path="/admin/banner/add"
+            element={
+              <AdminProtectedRoute>
+                <AddBanner />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
             exact
             path="/admin/stories"
             element={
@@ -117,6 +136,15 @@ function App() {
             element={
               <AdminProtectedRoute>
                 <ViewGenre />
+              </AdminProtectedRoute>
+            }
+          />
+          <Route
+            exact
+            path="/admin/view/banner/:id"
+            element={
+              <AdminProtectedRoute>
+                <ViewBanner />
               </AdminProtectedRoute>
             }
           />
