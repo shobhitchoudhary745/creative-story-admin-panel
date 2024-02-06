@@ -122,24 +122,24 @@ export default function Genres() {
                   <tr>
                     <th>S.no</th>
                     <th>Genre</th>
+                    <th>Total Starter</th>
                     <th>Starter 1</th>
-                    <th>Starter 2</th>
-                    <th>Starter 3</th>
+                    {/* <th>Starter 3</th> */}
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {loading ? (
-                    <CustomSkeleton resultPerPage={5} column={6} />
+                    <CustomSkeleton resultPerPage={5} column={5} />
                   ) : (
                     genres.length > 0 &&
                     genres.map((genre, i) => (
                       <tr key={i} className="odd">
                         <td className="text-center">{skip + i + 1}</td>
                         <td>{genre.genre}</td>
-                        <td>{genre.starter[0].starter||""}</td>
-                        <td>{genre.starter[1].starter||""}</td>
-                        <td>{genre.starter[2].starter||""}</td>
+                        <td>{genre.starter.length}</td>
+                        <td>{genre.starter[0].starter}</td>
+                        {/* <td>{genre.starter[2].starter||""}</td> */}
                         <td>
                           <Button
                             onClick={() => {
