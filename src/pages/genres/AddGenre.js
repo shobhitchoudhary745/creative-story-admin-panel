@@ -71,7 +71,12 @@ export default function AddGenre() {
       const { data } = await axiosInstance.post(
         "/api/genre/addGenre",
         formData,
-        { headers: { authorization: `Bearer ${token}` } }
+        {
+          headers: {
+           
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       if (data.success) {
         setLoad(false);
@@ -170,7 +175,7 @@ export default function AddGenre() {
                     <Form.Label>Description</Form.Label>
                     <Form.Control
                       as="textarea"
-                      style={{height:"120px"}}
+                      style={{ height: "120px" }}
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     />
