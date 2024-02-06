@@ -28,7 +28,6 @@ export default function AddGenre() {
   const [image, setImage] = useState("");
   const [load, setLoad] = useState(false);
 
-  
   const resetForm = (e) => {
     setGenre("");
     setStarter("");
@@ -59,7 +58,7 @@ export default function AddGenre() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("genre", genre);
-    formData.append('starter', JSON.stringify(starterArray));
+    formData.append("starter", JSON.stringify(starterArray));
     formData.append("colour", colour);
     formData.append("backgroundColour", backgroundColour);
     formData.append("image", image);
@@ -170,6 +169,8 @@ export default function AddGenre() {
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Description</Form.Label>
                     <Form.Control
+                      as="textarea"
+                      style={{height:"120px"}}
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                     />

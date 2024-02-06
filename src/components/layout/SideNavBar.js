@@ -62,6 +62,7 @@ const active_text = {
   Users: "users",
   Stories: "stories",
   Genres: "genres",
+  "Banners":"banners",
   "Privacy Policy": "privacy-policy",
   "Terms & Condition": "terms-and-condition",
 };
