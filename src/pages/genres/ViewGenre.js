@@ -2,28 +2,21 @@ import React, { useEffect, useReducer, useContext, useState } from "react";
 import { Store } from "../../states/store";
 // import { getError } from "../../utils/error.js";
 import { reducer } from "../../states/reducers";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import {
-  
-  Card,
-  Col,
-  Container,
-  Row,
-  
-} from "react-bootstrap";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import EditGenreModel from "./EditGenreModel.js";
 // import axiosInstance from "../../utils/axiosUtil.js";
 import { FaEdit } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
-import {  MessageBox } from "../../components";
+import { MessageBox } from "../../components";
 
 import { getGenre } from "../../states/actions.js";
 
 const ViewGenre = () => {
   const { state, dispatch: ctxDispatch } = useContext(Store);
-  const { token,genre } = state;
+  const { token, genre } = state;
   const { id } = useParams(); // category/:id
   // const navigate = useNavigate();
   // console.log("in this room")
@@ -32,6 +25,7 @@ const ViewGenre = () => {
     loading: true,
     error: "",
   });
+  const [currentStarter, setCurrentStarter] = useState(0);
 
   useEffect(() => {
     getGenre(ctxDispatch, dispatch, token, id);
@@ -57,7 +51,7 @@ const ViewGenre = () => {
             <Card>
               <Card.Header>
                 <Card.Title>
-                  {loading ? <Skeleton /> : "Genre Details"} 
+                  {loading ? <Skeleton /> : "Genre Details"}
                 </Card.Title>
 
                 <div className="card-tools">
@@ -79,31 +73,52 @@ const ViewGenre = () => {
                       </Col>
                       <Col md={3}>
                         <p className="mb-0">
-                          <strong>Starter 1</strong>
+                          <strong>Select Starter</strong>
                         </p>
-                        <p>{loading ? <Skeleton /> : genre.starter[0].starter}</p>
+                        <p>
+                          {loading ? (
+                            <Skeleton />
+                          ) : (
+                            <select
+                              onChange={(e) =>
+                                setCurrentStarter(e.target.value)
+                              }
+                            >
+                              {genre.starter.map((data, index) => {
+                                return (
+                                  <option key={index} value={index}>
+                                    {data.starter}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          )}
+                        </p>
                       </Col>
-                      <Col md={3}>
+                      <Col md={6}>
                         <p className="mb-0">
-                          <strong>Starter 2</strong>
+                          <strong>Description</strong>
                         </p>
-                        <p>{loading ? <Skeleton /> : genre.starter[1].starter}</p>
-                      </Col>
-                      <Col md={3}>
-                        <p className="mb-0">
-                          <strong>Starter 3</strong>
+                        <p>
+                          {loading ? (
+                            <Skeleton />
+                          ) : (
+                            genre.starter[currentStarter].description
+                          )}
                         </p>
-                        <p>{loading ? <Skeleton /> : genre.starter[2].starter}</p>
                       </Col>
-                      
-                      
-                      
+                     
+
                       <Col md={3}>
                         <p className="mb-0">
                           <strong>Created At</strong>
                         </p>
                         <p>
-                          {loading ? <Skeleton /> : getDateTime(genre.createdAt)}
+                          {loading ? (
+                            <Skeleton />
+                          ) : (
+                            getDateTime(genre.createdAt)
+                          )}
                         </p>
                       </Col>
                       <Col md={3}>
@@ -111,12 +126,15 @@ const ViewGenre = () => {
                           <strong>Last Update</strong>
                         </p>
                         <p>
-                          {loading ? <Skeleton /> : getDateTime(genre.updatedAt)}
+                          {loading ? (
+                            <Skeleton />
+                          ) : (
+                            getDateTime(genre.updatedAt)
+                          )}
                         </p>
                       </Col>
                     </Row>
                   </Col>
-
                 </Row>
               </Card.Body>
             </Card>
