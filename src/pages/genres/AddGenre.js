@@ -175,6 +175,7 @@ export default function AddGenre() {
                     <Form.Label>Description</Form.Label>
                     <Form.Control
                       as="textarea"
+                      maxLength={250}
                       style={{ height: "120px" }}
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
