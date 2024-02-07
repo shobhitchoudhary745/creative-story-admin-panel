@@ -175,6 +175,7 @@ export default function EditGenresModel(props) {
                     <Form.Label>Starter {index + 1}</Form.Label>
                     <Form.Control
                       value={starter.starter}
+                      maxLength={50}
                       onChange={(e) => {
                         const updatedArray = starters.map((data, i) => {
                           let obj = { ...data };

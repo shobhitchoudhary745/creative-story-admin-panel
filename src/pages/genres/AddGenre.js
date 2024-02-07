@@ -14,6 +14,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Store } from "../../states/store";
 import { useNavigate } from "react-router-dom";
 import { getError } from "../../utils/error";
+import { Cropper } from "../../components";
 
 export default function AddGenre() {
   const { state } = useContext(Store);
@@ -114,6 +115,7 @@ export default function AddGenre() {
       exit={{ x: "100%" }}
     >
       <Container fluid>
+        <Cropper />
         <Row
           className="mt-2 mb-3"
           style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}
@@ -168,6 +170,7 @@ export default function AddGenre() {
                     <Form.Label>Starter</Form.Label>
                     <Form.Control
                       value={starter}
+                      maxLength={50}
                       onChange={(e) => setStarter(e.target.value)}
                     />
                   </Form.Group>
