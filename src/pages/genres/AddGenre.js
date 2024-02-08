@@ -28,7 +28,7 @@ export default function AddGenre() {
   const [backgroundColour, setBackgroundColour] = useState("");
   const [image, setImage] = useState("");
   const [load, setLoad] = useState(false);
-  console.log(image)
+  console.log(image);
 
   const resetForm = (e) => {
     setGenre("");
@@ -58,13 +58,28 @@ export default function AddGenre() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    if(!image){
-      toast.warning("Please Add or Crop image", {
-        position: toast.POSITION.BOTTOM_CENTER
+
+    if (!colour) {
+      toast.warning("Please Add Genre Colour", {
+        position: toast.POSITION.BOTTOM_CENTER,
       });
       return;
     }
-    e.preventDefault();
+    if (!backgroundColour) {
+      toast.warning("Please Add Genre Background Colour", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      return;
+    }
+
+    if (!image) {
+      toast.warning("Please Add or Crop image", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+      return;
+    }
+
+    // e.preventDefault();
     const formData = new FormData();
     formData.append("genre", genre);
     formData.append("starter", JSON.stringify(starterArray));
@@ -82,7 +97,6 @@ export default function AddGenre() {
         formData,
         {
           headers: {
-           
             authorization: `Bearer ${token}`,
           },
         }
@@ -121,7 +135,6 @@ export default function AddGenre() {
       exit={{ x: "100%" }}
     >
       <Container fluid>
-       
         <Row
           className="mt-2 mb-3"
           style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}
@@ -164,7 +177,7 @@ export default function AddGenre() {
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Image</Form.Label>
-                    <Cropper  setImage={setImage}  w={194} h={112} />
+                    <Cropper setImage={setImage} w={194} h={112} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Starter</Form.Label>
