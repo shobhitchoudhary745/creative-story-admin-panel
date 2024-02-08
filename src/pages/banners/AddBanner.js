@@ -14,6 +14,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Store } from "../../states/store";
 import { useNavigate } from "react-router-dom";
 import { getError } from "../../utils/error";
+import { Cropper } from "../../components";
 
 export default function AddBanner() {
   const { state } = useContext(Store);
@@ -89,12 +90,7 @@ export default function AddBanner() {
                 <Card.Body>
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Banner</Form.Label>
-                    <Form.Control
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => setImage(e.target.files[0])}
-                      required
-                    />
+                    <Cropper h={280} w={250} setImage={setImage} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Client Name</Form.Label>

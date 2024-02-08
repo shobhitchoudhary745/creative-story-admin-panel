@@ -8,7 +8,7 @@ import { Button, Container, Modal, Form, Spinner } from "react-bootstrap";
 
 import axiosInstance from "../../utils/axiosUtil.js";
 
-import { LoadingBox } from "../../components";
+import { Cropper, LoadingBox } from "../../components";
 
 export default function EditBannersModel(props) {
   const navigate = useNavigate();
@@ -101,12 +101,7 @@ export default function EditBannersModel(props) {
           <Container className="small-container">
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Banner</Form.Label>
-              <Form.Control
-                type="file"
-                accept="image/*"
-                onChange={(e) => setImage(e.target.files[0])}
-                // required
-              />
+              <Cropper h={280} w={250} setImage={setImage} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Client Name</Form.Label>
