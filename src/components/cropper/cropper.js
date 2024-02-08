@@ -144,8 +144,8 @@ export default function Cropper({ setImage, w, h, isUploaded }) {
                 src={imgSrc}
                 style={{
                   transform: `scale(${scale}) rotate(${rotate}deg)`,
-                  width: "300px",
-                  height: "300px",
+                  // width: "300px",
+                  // height: "300px",
                 }}
                 onLoad={onImageLoad}
               />

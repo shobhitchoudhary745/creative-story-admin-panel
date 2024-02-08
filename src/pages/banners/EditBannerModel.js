@@ -101,7 +101,7 @@ export default function EditBannersModel(props) {
           <Container className="small-container">
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Banner</Form.Label>
-              <Cropper h={280} w={250} setImage={setImage} />
+              <Cropper h={120} w={337} setImage={setImage} />
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Client Name</Form.Label>
