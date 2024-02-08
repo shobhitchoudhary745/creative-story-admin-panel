@@ -28,6 +28,7 @@ export default function AddGenre() {
   const [backgroundColour, setBackgroundColour] = useState("");
   const [image, setImage] = useState("");
   const [load, setLoad] = useState(false);
+  console.log(image)
 
   const resetForm = (e) => {
     setGenre("");
@@ -37,25 +38,32 @@ export default function AddGenre() {
     setDescription("");
   };
 
-  const fileHandler = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.type.startsWith("image/")) {
-        setImage(file);
-      } else {
-        toast.warning("Please select a valid image file.");
-        e.target.value = null;
-        return;
-      }
-    }
+  // const fileHandler = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     if (file.type.startsWith("image/")) {
+  //       setImage(file);
+  //     } else {
+  //       toast.warning("Please select a valid image file.");
+  //       e.target.value = null;
+  //       return;
+  //     }
+  //   }
 
-    if (e.target.files.length > 1) {
-      toast.warning("Please select only one file.");
-      e.target.value = null;
-    }
-  };
+  //   if (e.target.files.length > 1) {
+  //     toast.warning("Please select only one file.");
+  //     e.target.value = null;
+  //   }
+  // };
 
   const submitHandler = async (e) => {
+    e.preventDefault();
+    if(!image){
+      toast.warning("Please Add or Crop image", {
+        position: toast.POSITION.BOTTOM_CENTER
+      });
+      return;
+    }
     e.preventDefault();
     const formData = new FormData();
     formData.append("genre", genre);
@@ -99,8 +107,6 @@ export default function AddGenre() {
 
   const addStarter = (e) => {
     if (starter.length && description.length) {
-      // let temp = starterArray;
-      // temp.push({starter,description});
       setStarterArray((p) => [...p, { starter, description }]);
       setStarter("");
       setDescription("");
@@ -115,7 +121,7 @@ export default function AddGenre() {
       exit={{ x: "100%" }}
     >
       <Container fluid>
-        <Cropper />
+       
         <Row
           className="mt-2 mb-3"
           style={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}
@@ -158,13 +164,7 @@ export default function AddGenre() {
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Image</Form.Label>
-                    <Form.Control
-                      // value={image}
-                      onChange={fileHandler}
-                      required
-                      type="file"
-                      accept="image/*"
-                    />
+                    <Cropper  setImage={setImage}  w={194} h={112} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="name">
                     <Form.Label>Starter</Form.Label>

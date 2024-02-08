@@ -31,12 +31,12 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   );
 }
 
-export default function Cropper({ uploadHandler, w, h, isUploaded }) {
+export default function Cropper({ setImage, w, h, isUploaded }) {
   const imgRef = useRef(null);
   const blobUrlRef = useRef("");
   const hiddenAnchorRef = useRef(null);
   const previewCanvasRef = useRef(null);
-
+  // const [upload, uploadHandler] = useState("");
   const [crop, setCrop] = useState({});
   const [completedCrop, setCompletedCrop] = useState();
   const [imgSrc, setImgSrc] = useState("");
@@ -44,6 +44,7 @@ export default function Cropper({ uploadHandler, w, h, isUploaded }) {
   const [rotate, setRotate] = useState(0);
   const [aspect, setAspect] = useState(w / h);
   const [imageName, setImageName] = useState(null);
+  // console.log(upload);
 
   function onSelectFile(e) {
     if (e.target.files && e.target.files.length > 0) {
@@ -80,7 +81,7 @@ export default function Cropper({ uploadHandler, w, h, isUploaded }) {
       // blobUrlRef.current = URL.createObjectURL(blob);
       // hiddenAnchorRef.current.href = blobUrlRef.current;
       // hiddenAnchorRef.current.click();
-      uploadHandler(new File([blob], imageName, { type: blob.type }));
+      setImage(new File([blob], imageName, { type: blob.type }));
     });
   }
 
@@ -118,12 +119,13 @@ export default function Cropper({ uploadHandler, w, h, isUploaded }) {
 
   return (
     <div className="App">
-      <div className="Crop-Controls">
-        <Form.Group className="mb-3" controlId="promotion_image">
-          <Form.Label>Upload Image</Form.Label>
-          <Form.Control type="file" accept="image/*" onChange={onSelectFile} />
-        </Form.Group>
-        {/* <input type="file" accept="image/*" onChange={onSelectFile} /> */}
+      <div className="Crop-Controls mb-3">
+        <Form.Control
+          onChange={onSelectFile}
+          // required
+          type="file"
+          accept="image/*"
+        />
       </div>
       {!isUploaded && (
         <>
@@ -133,12 +135,18 @@ export default function Cropper({ uploadHandler, w, h, isUploaded }) {
               onChange={(_, percentCrop) => setCrop(percentCrop)}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
+              locked={true}
             >
               <img
                 ref={imgRef}
+                // style={{}}
                 alt="Crop me"
                 src={imgSrc}
-                style={{ transform: `scale(${scale}) rotate(${rotate}deg)` }}
+                style={{
+                  transform: `scale(${scale}) rotate(${rotate}deg)`,
+                  width: "300px",
+                  height: "300px",
+                }}
                 onLoad={onImageLoad}
               />
             </ReactCrop>
@@ -150,14 +158,14 @@ export default function Cropper({ uploadHandler, w, h, isUploaded }) {
                   ref={previewCanvasRef}
                   style={{
                     border: "1px solid black",
-                    objectFit: "contain",
+                    // objectFit: "contain",
                     width: completedCrop.width,
                     height: completedCrop.height,
                   }}
                 />
               </div>
               <div>
-                <Button onClick={onDownloadCropClick}>Upload Image</Button>
+                <Button className="mt-3" onClick={onDownloadCropClick}>Crop</Button>
                 {/* <a
               ref={hiddenAnchorRef}
               download

@@ -8,7 +8,7 @@ import { Button, Container, Modal, Form, Spinner } from "react-bootstrap";
 
 import axiosInstance from "../../utils/axiosUtil.js";
 
-import { LoadingBox } from "../../components";
+import { Cropper, LoadingBox } from "../../components";
 
 export default function EditGenresModel(props) {
   const navigate = useNavigate();
@@ -46,23 +46,23 @@ export default function EditGenresModel(props) {
     setBackgroundColour("");
   };
 
-  const fileHandler = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      if (file.type.startsWith("image/")) {
-        setImage(file);
-      } else {
-        toast.warning("Please select a valid image file.");
-        e.target.value = null;
-        return;
-      }
-    }
+  // const fileHandler = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     if (file.type.startsWith("image/")) {
+  //       setImage(file);
+  //     } else {
+  //       toast.warning("Please select a valid image file.");
+  //       e.target.value = null;
+  //       return;
+  //     }
+  //   }
 
-    if (e.target.files.length > 1) {
-      toast.warning("Please select only one file.");
-      e.target.value = null;
-    }
-  };
+  //   if (e.target.files.length > 1) {
+  //     toast.warning("Please select only one file.");
+  //     e.target.value = null;
+  //   }
+  // };
 
   useEffect(() => {}, [id, props.show]);
 
@@ -159,13 +159,7 @@ export default function EditGenresModel(props) {
             </Form.Group>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Image</Form.Label>
-              <Form.Control
-                // value={image}
-                onChange={fileHandler}
-                // required
-                type="file"
-                accept="image/*"
-              />
+              <Cropper  setImage={setImage}  w={194} h={112} />
             </Form.Group>
 
             {starters.map((starter, index) => {
