@@ -135,7 +135,7 @@ export default function Cropper({ setImage, w, h, isUploaded }) {
               onChange={(_, percentCrop) => setCrop(percentCrop)}
               onComplete={(c) => setCompletedCrop(c)}
               aspect={aspect}
-              locked={true}
+              // locked={true}
             >
               <img
                 ref={imgRef}
