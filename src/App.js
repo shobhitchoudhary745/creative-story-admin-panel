@@ -18,6 +18,7 @@ import AddGenre from "./pages/genres/AddGenre";
 import Banners from "./pages/banners/Banners";
 import AddBanner from "./pages/banners/AddBanner";
 import ViewBanner from "./pages/banners/ViewBanner";
+import DeleteAccount from "./pages/deleteaccount/DeleteAccount";
 
 function App() {
   const { state } = useContext(Store);
@@ -69,8 +70,9 @@ function App() {
               </AdminProtectedRoute>
             }
           />
-           <Route
-            exact path="/admin/genre/add"
+          <Route
+            exact
+            path="/admin/genre/add"
             element={
               <AdminProtectedRoute>
                 <AddGenre />
@@ -85,8 +87,9 @@ function App() {
               </AdminProtectedRoute>
             }
           />
-           <Route
-            exact path="/admin/banner/add"
+          <Route
+            exact
+            path="/admin/banner/add"
             element={
               <AdminProtectedRoute>
                 <AddBanner />
@@ -151,17 +154,25 @@ function App() {
           <Route
             path="/admin/privacy-policy"
             element={
-              <AdminProtectedRoute>
-                <PrivacyPolicy />
-              </AdminProtectedRoute>
+              // <AdminProtectedRoute>
+              <PrivacyPolicy />
+              // </AdminProtectedRoute>
             }
           ></Route>
           <Route
             path="/admin/terms-and-condition"
             element={
-              <AdminProtectedRoute>
-                <TermsAndCondition />
-              </AdminProtectedRoute>
+              // <AdminProtectedRoute>
+              <TermsAndCondition />
+              // </AdminProtectedRoute>
+            }
+          ></Route>
+          <Route
+            path="/admin/delete-account"
+            element={
+              // <AdminProtectedRoute>
+              <DeleteAccount />
+              // </AdminProtectedRoute>
             }
           ></Route>
           <Route path="*" element={<NotFound />} />

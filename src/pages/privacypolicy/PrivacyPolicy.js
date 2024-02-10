@@ -41,13 +41,13 @@ export default function PrivacyPolicy() {
             <div>
               <h5>Privacy Policy Content</h5>
             </div>
-            <div className="card-tools">
+            {token&&<div className="card-tools">
               <FaEdit
                 style={{ color: "blue" }}
                 size={20}
                 onClick={() => setModalShow(true)}
               />
-            </div>
+            </div>}
           </div>
           <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
         </div>}

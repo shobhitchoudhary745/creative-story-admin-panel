@@ -124,6 +124,11 @@ export default function AdminLoginScreen() {
             </div>
           </Form>
           <ToastContainer />
+          <div className="mt-4 d-flex gap-2 justify-content-center">
+            <Link className="text-decoration-underline" to="/admin/terms-and-condition">terms of use</Link>
+            <Link className="text-decoration-underline" to="/admin/privacy-policy">privacy policy</Link>
+            <Link className="text-decoration-underline" to="/admin/delete-account">delete account</Link>
+          </div>
         </Card.Body>
       </Card>
     </Container>

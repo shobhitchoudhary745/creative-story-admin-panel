@@ -44,13 +44,13 @@ export default function TermsAndCondition() {
               <div>
                 <h5>Terms & Condition Content</h5>
               </div>
-              <div className="card-tools">
+              {token&&<div className="card-tools">
                 <FaEdit
                   style={{ color: "blue" }}
                   size={20}
                   onClick={() => setModalShow(true)}
                 />
-              </div>
+              </div>}
             </div>
             <div dangerouslySetInnerHTML={{ __html: termsAndCondition }} />
           </div>
