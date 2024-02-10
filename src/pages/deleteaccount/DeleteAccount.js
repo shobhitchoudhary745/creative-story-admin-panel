@@ -13,15 +13,17 @@ export default function DeleteAccount() {
       return;
     }
     try {
-      const { data } = axiosInstance.delete("/api/user/delete-account");
+      const { data } = await axiosInstance.delete("/api/user/deleteUser", {
+        headers: {},
+      });
       if (data.success) {
         window.alert("Your Account Deleted Successfully!");
         navigate("/");
       }
     } catch (error) {
-        toast.error(getError(error), {
-            position: toast.POSITION.BOTTOM_CENTER,
-          });
+      toast.error(getError(error), {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     }
   };
 
