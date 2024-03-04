@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import axiosInstance from "../../utils/axiosUtil";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,14 +7,17 @@ import { useNavigate } from "react-router-dom";
 
 export default function DeleteAccount() {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const deleteAccount = async (e) => {
     e.preventDefault();
     if (!window.confirm("Are you sure you want to Delete your Account?")) {
       return;
     }
     try {
-      const { data } = await axiosInstance.delete("/api/user/deleteUser", {
-        headers: {},
+      const { data } = await axiosInstance.post("/api/admin/deleteAccount", {
+        email,
+        password,
       });
       if (data.success) {
         window.alert("Your Account Deleted Successfully!");
@@ -39,6 +42,7 @@ export default function DeleteAccount() {
             placeholder="Enter email"
             autoComplete="email"
             required
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -47,7 +51,12 @@ export default function DeleteAccount() {
 
         <Form.Group controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Password" required />
+          <Form.Control
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
+            required
+          />
         </Form.Group>
 
         <Button className="mt-4" variant="danger" type="submit">
