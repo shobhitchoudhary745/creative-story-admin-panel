@@ -118,7 +118,7 @@ const ViewStories = () => {
                         <p className="mb-0">
                           <strong>Host</strong>
                         </p>
-                        <p>{loading ? <Skeleton /> : story.host.firstName+" "+story.host.lastName}</p>
+                        <p>{loading ? <Skeleton /> : story?.firstName?(story.host.firstName+" "+story.host.lastName):"Creative Story User"}</p>
                       </Col>
                       
                       <Col md={3}>

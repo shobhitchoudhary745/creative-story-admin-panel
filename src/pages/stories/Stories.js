@@ -133,7 +133,7 @@ export default function Stories() {
                         <td>{story.theme}</td>
                         <td>{story.participants.length}</td>
                         <td>{story.description.slice(0,20)+"..."}</td>
-                        <td>{(story.host?.firstName+" "+story.host?.lastName)||"null"}</td>
+                        <td>{(story.host?.firstName?(story.host?.firstName+" "+story.host?.lastName):"Creative Story User")}</td>
                         <td>
                           <Button
                             onClick={() => {

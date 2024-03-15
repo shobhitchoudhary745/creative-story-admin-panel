@@ -18,8 +18,10 @@ import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { getError } from "../../utils/error";
 import axiosInstance from "../../utils/axiosUtil";
+import io from "socket.io-client";
 
 export default function Users() {
+  const [socket, setSocket] = useState();
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const navigate = useNavigate();
   const { users, token, userLength } = state;
@@ -37,6 +39,15 @@ export default function Users() {
     loading: false,
     error: "",
   });
+
+  useEffect(() => {
+    const socketcopy = io("ws://54.79.46.112:4000/");
+    setSocket(socketcopy);
+    return () => {
+      socket?.disconnect();
+    };
+  }, []);
+
   useEffect(() => {
     getAllUsers(
       ctxDispatch,
@@ -52,13 +63,25 @@ export default function Users() {
     if (window.confirm("Are you sure you want to delete this user?") === true) {
       try {
         setDel(true);
-        const res = await axiosInstance.delete(`/api/admin/deleteUser/${id}`, {
-          headers: { authorization: `Bearer ${token}` },
-        });
-        setDel(false);
-        toast.success("User Deleted Successsfully", {
-          position: toast.POSITION.BOTTOM_CENTER,
-        });
+        const { data } = await axiosInstance.delete(
+          `/api/admin/deleteUser/${id}`,
+          {
+            headers: { authorization: `Bearer ${token}` },
+          }
+        );
+        if (data.success) {
+          console.log(data);
+          if (socket) {
+            for (let room in data.rooms) {
+              if (room.status == "active")
+                socket.emit("escapeTurn", { roomId: room._id });
+            }
+          }
+          setDel(false);
+          toast.success("User Deleted Successsfully", {
+            position: toast.POSITION.BOTTOM_CENTER,
+          });
+        }
       } catch (error) {
         toast.error(getError(error), {
           position: toast.POSITION.BOTTOM_CENTER,
