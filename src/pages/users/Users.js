@@ -48,6 +48,8 @@ export default function Users() {
     };
   }, []);
 
+  console.log(socket)
+
   useEffect(() => {
     getAllUsers(
       ctxDispatch,
