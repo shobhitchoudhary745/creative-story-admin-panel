@@ -150,7 +150,7 @@ export default function Genres() {
                           >
                             <FaEye />
                           </Button>
-                          <Button
+                          {/* <Button
                             onClick={() => {
                               deleteGenre(genre._id);
                             }}
@@ -158,7 +158,7 @@ export default function Genres() {
                             className="btn btn-danger ms-2"
                           >
                             <FaTrashAlt />
-                          </Button>
+                          </Button> */}
                         </td>
                       </tr>
                     ))

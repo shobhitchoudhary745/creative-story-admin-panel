@@ -13,7 +13,7 @@ import {
 import { ToastContainer, toast } from "react-toastify";
 import { Store } from "../states/store";
 import { reducer } from "../states/reducers";
-import { FaEnvelope, FaLock } from "react-icons/fa";
+import { FaEnvelope, FaEye, FaEyeSlash, FaLock } from "react-icons/fa";
 import { useTitle } from "../components";
 import { toastOptions } from "../utils/error";
 import { clearErrors, login } from "../states/actions";
@@ -24,6 +24,7 @@ export default function AdminLoginScreen() {
 
   const { state, dispatch: ctxDispatch } = useContext(Store);
   const { token } = state;
+  const [check, setCheck] = useState(false);
 
   const navigate = useNavigate();
   const [{ loading, error }, dispatch] = useReducer(reducer, {
@@ -33,13 +34,13 @@ export default function AdminLoginScreen() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    await login(ctxDispatch, dispatch, { email:username, password });
+    await login(ctxDispatch, dispatch, { email: username, password });
   };
 
   useEffect(() => {
     if (token) {
       // setTimeout(() => {
-        navigate("/admin/dashboard");
+      navigate("/admin/dashboard");
       // }, 2000);
     }
     if (error) {
@@ -75,12 +76,16 @@ export default function AdminLoginScreen() {
             <Form.Group controlId="password" className="input-group mb-3">
               <Form.Control
                 placeholder="Password"
-                type="password"
+                type={check ? "text" : "password"}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <InputGroup.Text>
-                <FaLock />
+              <InputGroup.Text onClick={() => setCheck((p) => !p)}>
+                {!check ? (
+                  <FaEye style={{ cursor: "pointer" }} />
+                ) : (
+                  <FaEyeSlash style={{ cursor: "pointer" }} />
+                )}
               </InputGroup.Text>
             </Form.Group>
             {/* <Row>
@@ -111,7 +116,7 @@ export default function AdminLoginScreen() {
                 <label>Remember Me</label>
               </div>
               <div>
-              {loading ? (
+                {loading ? (
                   <Button disabled className="float-sm-end">
                     <Spinner animation="border" size="sm" />
                   </Button>
@@ -125,9 +130,24 @@ export default function AdminLoginScreen() {
           </Form>
           <ToastContainer />
           <div className="mt-4 d-flex gap-2 justify-content-center">
-            <Link className="text-decoration-underline" to="/admin/terms-and-condition">Terms of Use</Link>
-            <Link className="text-decoration-underline" to="/admin/privacy-policy">Privacy Policy</Link>
-            <Link className="text-decoration-underline" to="/admin/delete-account">Delete Account</Link>
+            <Link
+              className="text-decoration-underline"
+              to="/admin/terms-and-condition"
+            >
+              Terms of Use
+            </Link>
+            <Link
+              className="text-decoration-underline"
+              to="/admin/privacy-policy"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              className="text-decoration-underline"
+              to="/admin/delete-account"
+            >
+              Delete Account
+            </Link>
           </div>
         </Card.Body>
       </Card>
